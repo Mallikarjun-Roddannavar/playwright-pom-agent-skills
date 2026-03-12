@@ -15,19 +15,37 @@ It combines:
 
 The goal is to keep automation changes consistent with the project's structure, conventions, and validation flow.
 
+## Repository Boundary
+
+This repository is the automation framework only.
+
+The application under test (AUT) is expected to exist in a separate backend/frontend repository and be running before you execute this framework.
+
+This repo does not start or own the AUT codebase. It consumes the AUT through the URLs configured in `config/test-config.json`.
+
+Before running tests, make sure:
+
+- the AUT backend is running and reachable at the configured API base URL
+- the AUT frontend is running and reachable at the configured UI base URL
+- the configured demo users exist in the AUT
+
 ## Structure
 
 ```text
 playwright-pom-agent-skills/
+  .codex/
+    skills/
   api/
     services/
     specs/
   config/
     test-config.json
+  scripts/
   ui/
     pages/
     setup/
     specs/
+    test-data/
   utils/
     common/
     fixtures/
@@ -41,7 +59,7 @@ playwright-pom-agent-skills/
 ```bash
 cd playwright-pom-agent-skills
 npm install
-npx playwright install
+npm run install:browsers
 ```
 
 ## Config Model
@@ -55,6 +73,7 @@ That file is imported directly by the framework at runtime for:
 - UI base URL
 - API base URL
 - role credentials for admin, editor, and viewer
+- shared wait values used by the framework
 
 If you need different values, edit `config/test-config.json` directly.
 
@@ -71,6 +90,7 @@ npm run test:debug
 npm run report
 npm run lint
 npm run lint:fix
+npm run typecheck
 npm run check:naming
 npm run format
 npm run format:check
@@ -87,9 +107,12 @@ npm test
 When you change URLs or credentials:
 
 1. Update `config/test-config.json`
-2. Run tests again
+2. Re-run the most relevant validation commands
+
+Typical validation after config changes:
 
 ```bash
+npm run test:list
 npm test
 ```
 
@@ -119,6 +142,9 @@ This aligns with Playwright project dependency guidance.
 ## Multi-Role
 
 - Shared role-based browser, API, and cleanup fixtures: `utils/fixtures/TestFixtures.ts`
+- Browser fixtures are exposed by role, for example `adminPage`, `editorPage`, and `viewerPage`
+- API fixtures are exposed by role, for example `adminRequest`, `editorRequest`, and `viewerRequest`
+- Data cleanup is registered through the shared `cleanup` fixture
 
 ## Route Ownership
 
@@ -191,13 +217,20 @@ This framework currently follows these Page Object Model practices:
 
 This section describes the Page Object Model practices that are already implemented in the framework.
 
-## AI Guidance
+## AI Guidance And Evaluation
 
-This repository is also structured to help AI coding assistants produce framework-aligned automation changes instead of generic generated code.
+This repository is structured to help Codex and similar AI coding assistants produce framework-aligned automation changes instead of generic generated code.
 
-- `AGENTS.md` defines repo-level rules such as structure, naming, ownership boundaries, and validation defaults.
-- Local skills under `.codex/skills/` define repeatable workflows for UI page-object work, API workflow changes, and quality-tooling tasks.
-- Together, they help keep selectors in page objects, assertions in specs, fixtures reused, and validation focused on the smallest relevant command set.
+### Guidance Sources
+
+- root `AGENTS.md` defines repo-level rules such as structure, naming, ownership boundaries, and validation defaults
+- shared role-based fixtures live in `utils/fixtures/TestFixtures.ts`
+- local skills under `.codex/skills/` define focused workflows for:
+  - `playwright-pom-agent-skills-ui-pom`
+  - `playwright-pom-agent-skills-api-workflow`
+  - `playwright-pom-agent-skills-quality-tooling`
+
+Together, they help keep selectors in page objects, assertions in specs, fixtures reused, and validation focused on the smallest relevant command set.
 
 ### Example Use Case
 
@@ -213,25 +246,12 @@ When asked to convert a manual test case and a raw Playwright recording into mai
 
 AI guidance improves output quality and consistency, but it does not replace review, execution, or validation.
 
-## AI Assistant Guidance
-
-This framework includes repo-local guidance for Codex and similar AI coding assistants:
-
-- root `AGENTS.md` for framework-wide conventions
-- shared role-based fixtures in `utils/fixtures/TestFixtures.ts`
-- local skills under `.codex/skills/` for focused workflows:
-  - `playwright-pom-agent-skills-ui-pom`
-  - `playwright-pom-agent-skills-api-workflow`
-  - `playwright-pom-agent-skills-quality-tooling`
-
-These files are intended to help Codex follow the framework conventions already used in this repo, especially for page objects, API services, fixtures, logging, waits, and quality tooling.
-
-## Codex Skill Evaluation
+### Codex Skill Evaluation
 
 Use the prompts below to evaluate whether the local skills are improving change quality in this framework.
 This benchmark covers new test creation, updates to existing tests, registration of cleanup for created test data, and cleanup of generated or raw tests into framework-compliant tests.
 
-### How To Evaluate
+#### How To Evaluate
 
 1. Run the same prompt with and without an explicit skill mention when practical.
 2. Compare the output against the checklist below, not just whether the task completed.
@@ -243,7 +263,7 @@ This benchmark covers new test creation, updates to existing tests, registration
 - Weak benchmark prompt: states the task and also restates framework rules, for example "Add a new UI negative test for invalid password and keep selectors in page objects, assertions in specs, and reuse existing fixtures."
 - The benchmark is stronger when the prompt is simple and the framework conventions come from `AGENTS.md`, skills, and references rather than from the prompt itself.
 
-### Evaluation Checklist
+#### Evaluation Checklist
 
 - Architecture: selectors stay in page objects, assertions stay in specs, and API assertions stay out of services.
 - Reuse: existing fixtures, services, routes, and page-object methods are reused before new ones are added.
@@ -253,11 +273,11 @@ This benchmark covers new test creation, updates to existing tests, registration
 - Change scope: edits stay focused and avoid unrelated churn.
 - Validation: the smallest relevant lint/typecheck/test commands are used.
 
-### Sample Evaluation Prompts
+#### Sample Evaluation Prompts
 
 These prompts are intentionally task-focused. They should not restate the framework conventions that the skills are supposed to supply.
 
-#### UI / POM
+##### UI / POM
 
 - "Add a new UI test that verifies an editor can create a folder from the folders page and the new folder appears in the list."
 - "Add a new UI negative test that verifies a login failure message for an invalid password."
@@ -265,7 +285,7 @@ These prompts are intentionally task-focused. They should not restate the framew
 - "Update an existing multi-role UI test because the folder list now requires an explicit refresh after create."
 - "Add a new UI test for opening a folder and verifying its files screen."
 
-#### API / Service Boundaries
+##### API / Service Boundaries
 
 - "Add a new API test that verifies an editor can create a folder and then list it."
 - "Add a new API negative test for invalid credentials or missing token scenarios."
@@ -273,7 +293,7 @@ These prompts are intentionally task-focused. They should not restate the framew
 - "Update an existing API spec to validate a new response field on folders."
 - "Add a new API test for viewer access to list folders."
 
-#### Quality / Tooling
+##### Quality / Tooling
 
 - "Update the framework so a new naming convention is enforced automatically."
 - "Update framework docs and validation after a new shared route or config convention is introduced."
@@ -283,5 +303,6 @@ These prompts are intentionally task-focused. They should not restate the framew
 
 - `ui/specs/login.spec.ts`
 - `ui/specs/multi-role.spec.ts`
+- `ui/specs/files.spec.ts`
 - `api/specs/health.spec.ts`
 - `api/specs/rbac.spec.ts`
