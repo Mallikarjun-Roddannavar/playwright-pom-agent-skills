@@ -47,9 +47,9 @@ Bad:
 
 ```ts
 // ui/specs/login.spec.ts
-await page.getByTestId("username-input").fill("admin");
-await page.getByTestId("password-input").fill("wrong-password");
-await page.getByRole("button", { name: "Sign in" }).click();
+await page.getByTestId("login-username").fill("admin");
+await page.getByTestId("login-password").fill("wrong-password");
+await page.getByTestId("login-submit").click();
 await expect(page.getByTestId("login-error")).toBeVisible();
 ```
 
@@ -109,9 +109,9 @@ Before:
 ```ts
 // generated-style test
 await page.goto("/login");
-await page.getByTestId("username-input").fill("admin");
-await page.getByTestId("password-input").fill("adminpass");
-await page.getByRole("button", { name: "Sign in" }).click();
+await page.getByTestId("login-username").fill("admin");
+await page.getByTestId("login-password").fill("admin123");
+await page.getByTestId("login-submit").click();
 await expect(page.getByTestId("home-title")).toBeVisible();
 ```
 
@@ -170,3 +170,4 @@ Why:
 - `ui/pages/LoginPage.ts`
 - `ui/pages/HomePage.ts`
 - `ui/pages/FoldersPage.ts`
+

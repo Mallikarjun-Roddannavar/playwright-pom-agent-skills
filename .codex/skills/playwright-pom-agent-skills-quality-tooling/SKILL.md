@@ -27,7 +27,7 @@ Maintain the framework infrastructure that supports test execution quality and d
 
 ## Follow These Rules
 
-- Keep `config/test-config.json` as the single config source.
+- Keep `config/test-config.json` as the single config source for base URLs, role credentials, and shared waits.
 - Keep framework timeout derivation in `utils/common/Waits.ts`.
 - Keep scoped logging via `logger.withScope(...)`.
 - Keep the custom reporter at `utils/common/CustomReporter.ts`.
@@ -41,6 +41,7 @@ Maintain the framework infrastructure that supports test execution quality and d
 2. Check whether the change is configuration, validation, runtime helper, or documentation.
 3. Reuse an existing script or helper before adding a new one.
 4. Keep claims in docs limited to what the framework actually implements.
+
 
 ## Preferred Change Order
 
