@@ -1,0 +1,4 @@
+interface:
+  display_name: "Playwright POM Agent Skills Quality Tooling"
+  short_description: "Lint, types, reporting, and config workflow"
+  default_prompt: "Use $playwright-pom-agent-skills-quality-tooling to update linting, reporting, logging, and framework configuration in playwright-pom-agent-skills."

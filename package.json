@@ -1,0 +1,29 @@
+{
+  "name": "playwright-pom-agent-skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright UI/API automation framework with POM and agent skills",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --project=ui",
+    "test:api": "playwright test --project=api",
+    "test:debug": "playwright test --debug",
+    "test:list": "playwright test --list",
+    "report": "playwright show-report",
+    "install:browsers": "playwright install",
+    "lint": "node ./scripts/checkNamingConventions.mjs && eslint .",
+    "lint:fix": "node ./scripts/checkNamingConventions.mjs && eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "typecheck": "tsc --noEmit",
+    "check:naming": "node ./scripts/checkNamingConventions.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3",
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "prettier": "^3.0.0",
+    "typescript-eslint": "^8.42.0"
+  }
+}
