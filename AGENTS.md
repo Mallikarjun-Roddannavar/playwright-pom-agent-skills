@@ -19,12 +19,6 @@ Use these local skills when their scope matches the task:
 - Keep selectors in page objects. Do not add raw page selectors in specs.
 - Keep assertions in tests. Do not add assertions inside page objects or API services.
 - Keep API services assertion-free and return raw `APIResponse` values.
-- Use TypeScript path aliases instead of deep relative imports:
-  - `@pages/*`
-  - `@api/*`
-  - `@utils/*`
-  - `@config/*`
-- Use route constants from `ui/pages/BasePage.ts` and `api/services/BaseApiService.ts` instead of hardcoded paths.
 - Use config from `config/test-config.json` as the single source of truth for base URLs, role credentials, and shared waits.
 - Use `utils/common/Waits.ts` for framework wait and timeout values.
 - Use `logger.withScope(...)` for scoped logging.
@@ -40,6 +34,22 @@ Use these local skills when their scope matches the task:
 - If config values need to change, update `config/test-config.json` directly.
 - Keep JSON config keys in `UPPER_SNAKE_CASE` to match the current framework model.
 - The committed credentials are demo credentials intended for the sample app used with this framework.
+
+## Import Aliases
+
+- Use TypeScript path aliases instead of deep relative imports.
+- Preferred aliases:
+  - `@pages/*`
+  - `@api/*`
+  - `@utils/*`
+  - `@config/*`
+- Prefer these aliases in specs, page objects, services, fixtures, and tooling files.
+
+## Route Ownership
+
+- UI routes are owned by `ui/pages/BasePage.ts`.
+- API routes are owned by `api/services/BaseApiService.ts`.
+- Reuse those constants instead of hardcoding paths in specs, setup files, or services.
 
 ## Naming Conventions
 
@@ -95,6 +105,3 @@ After meaningful changes, prefer validating with the smallest relevant command s
 - Playwright inventory: `./node_modules/.bin/playwright.cmd test --list`
 
 Only run the full test suite when it is relevant to the change or the user asks for it.
-
-
-
