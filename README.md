@@ -1,19 +1,12 @@
 # Playwright POM Agent Skills (Playwright + TypeScript)
 
-Reusable framework for UI and API automation with role-based auth setup.
-
-## Why This Repo Exists
-
 This repository demonstrates a Playwright + TypeScript automation framework designed for both maintainable test engineering and AI-assisted development.
 
 It combines:
 
 - Page Object Model for UI automation
-- shared fixtures for role-based testing
 - API and UI coverage in one framework
 - `AGENTS.md` and local skills to guide AI coding assistants toward framework-aligned changes
-
-The goal is to keep automation changes consistent with the project's structure, conventions, and validation flow.
 
 ## Repository Boundary
 
@@ -62,22 +55,6 @@ npm install
 npm run install:browsers
 ```
 
-## Config Model
-
-This framework uses a single committed config source:
-
-- `config/test-config.json`
-
-That file is imported directly by the framework at runtime for:
-
-- UI base URL
-- API base URL
-- role credentials for admin, editor, and viewer
-- shared wait values used by the framework
-
-If you need different values, edit `config/test-config.json` directly.
-
-The credentials in `config/test-config.json` are demo credentials for the sample app used by this repository.
 
 ## Run
 
@@ -188,7 +165,7 @@ Use these naming rules consistently across the framework:
 
 ## Playwright Best Practices Coverage
 
-This framework currently follows these Playwright best practices:
+Implemented in this framework:
 
 - test isolation through fresh browser contexts and API request contexts per role
 - setup project with project dependencies for reusable authenticated state
@@ -203,11 +180,9 @@ This framework currently follows these Playwright best practices:
 - tests clean up the data they create so repeated runs do not leave backend residue or interfere with later scenarios
 - cleanup registration is framework-managed through the shared `cleanup` fixture instead of suite-owned lifecycle code
 
-This section lists only the best practices that are already implemented in the framework.
-
 ## Page Object Model Coverage
 
-This framework currently follows these Page Object Model practices:
+Implemented in this framework:
 
 - page classes represent application pages in `ui/pages`
 - selectors are centralized in page objects instead of being duplicated in specs
@@ -215,85 +190,49 @@ This framework currently follows these Page Object Model practices:
 - assertions remain in tests instead of page objects
 - shared page behavior is centralized in `BasePage.ts`
 
-This section describes the Page Object Model practices that are already implemented in the framework.
 
-## AI Guidance And Evaluation
+## AI Guidance
 
-This repository is structured to help Codex and similar AI coding assistants produce framework-aligned automation changes instead of generic generated code.
+This repo includes local AI guidance to keep framework changes aligned with the existing structure and conventions.
 
-### Guidance Sources
-
-- root `AGENTS.md` defines repo-level rules such as structure, naming, ownership boundaries, and validation defaults
-- shared role-based fixtures live in `utils/fixtures/TestFixtures.ts`
-- local skills under `.codex/skills/` define focused workflows for:
+- `AGENTS.md` defines repo-level rules
+- `utils/fixtures/TestFixtures.ts` defines the shared role-based fixture surface
+- `.codex/skills/` contains focused workflows for:
   - `playwright-pom-agent-skills-ui-pom`
   - `playwright-pom-agent-skills-api-workflow`
   - `playwright-pom-agent-skills-quality-tooling`
 
-Together, they help keep selectors in page objects, assertions in specs, fixtures reused, and validation focused on the smallest relevant command set.
+The expected outcome is simple: selectors stay in page objects, assertions stay in specs, fixtures and services are reused, and validation stays targeted.
 
-### Example Use Case
+## Skill Evaluation
 
-When asked to convert a manual test case and a raw Playwright recording into maintainable automation, the expected workflow is to:
+Use short task-focused prompts to evaluate whether the local skills improve output quality.
+Do not restate framework rules in the prompt; those should come from `AGENTS.md`, skills, and references.
 
-- inspect similar existing specs and page objects first
-- add new selectors and actions in the correct page object layer
-- keep assertions in the spec
-- reuse shared fixtures and cleanup registration
-- validate the change with targeted checks before finishing
+### Quick Checklist
 
-### Expectation
+- selectors stay in page objects
+- assertions stay in specs and API services remain assertion-free
+- existing fixtures, routes, and helpers are reused before new ones are added
+- alias imports and naming conventions are preserved
+- edits stay focused
+- the smallest relevant validation commands are used
 
-AI guidance improves output quality and consistency, but it does not replace review, execution, or validation.
+### Sample Prompts
 
-### Codex Skill Evaluation
-
-Use the prompts below to evaluate whether the local skills are improving change quality in this framework.
-This benchmark covers new test creation, updates to existing tests, registration of cleanup for created test data, and cleanup of generated or raw tests into framework-compliant tests.
-
-#### How To Evaluate
-
-1. Run the same prompt with and without an explicit skill mention when practical.
-2. Compare the output against the checklist below, not just whether the task completed.
-3. Add guidance to a skill only when the evaluation shows a repeat failure pattern.
-
-#### Prompt Design Note
-
-- Good benchmark prompt: states the task only, for example "Add a new UI negative test for invalid password."
-- Weak benchmark prompt: states the task and also restates framework rules, for example "Add a new UI negative test for invalid password and keep selectors in page objects, assertions in specs, and reuse existing fixtures."
-- The benchmark is stronger when the prompt is simple and the framework conventions come from `AGENTS.md`, skills, and references rather than from the prompt itself.
-
-#### Evaluation Checklist
-
-- Architecture: selectors stay in page objects, assertions stay in specs, and API assertions stay out of services.
-- Reuse: existing fixtures, services, routes, and page-object methods are reused before new ones are added.
-- Selector hygiene: raw UI locators are not introduced in specs.
-- Boundary discipline: fixture, page, spec, and service ownership remains clear.
-- Naming and imports: aliases and repo naming conventions are preserved.
-- Change scope: edits stay focused and avoid unrelated churn.
-- Validation: the smallest relevant lint/typecheck/test commands are used.
-
-#### Sample Evaluation Prompts
-
-These prompts are intentionally task-focused. They should not restate the framework conventions that the skills are supposed to supply.
-
-##### UI / POM
+#### UI / POM
 
 - "Add a new UI test that verifies an editor can create a folder from the folders page and the new folder appears in the list."
 - "Add a new UI negative test that verifies a login failure message for an invalid password."
 - "Update an existing UI login test because the app now lands on a different page after successful sign-in."
-- "Update an existing multi-role UI test because the folder list now requires an explicit refresh after create."
-- "Add a new UI test for opening a folder and verifying its files screen."
 
-##### API / Service Boundaries
+#### API / Service Boundaries
 
 - "Add a new API test that verifies an editor can create a folder and then list it."
 - "Add a new API negative test for invalid credentials or missing token scenarios."
-- "Update an existing RBAC API test because delete behavior changed from 200 to 204."
 - "Update an existing API spec to validate a new response field on folders."
-- "Add a new API test for viewer access to list folders."
 
-##### Quality / Tooling
+#### Quality / Tooling
 
 - "Update the framework so a new naming convention is enforced automatically."
 - "Update framework docs and validation after a new shared route or config convention is introduced."
@@ -306,3 +245,8 @@ These prompts are intentionally task-focused. They should not restate the framew
 - `ui/specs/files.spec.ts`
 - `api/specs/health.spec.ts`
 - `api/specs/rbac.spec.ts`
+
+
+
+
+
