@@ -2,6 +2,19 @@
 
 Reusable framework for UI and API automation with role-based auth setup.
 
+## Why This Repo Exists
+
+This repository demonstrates a Playwright + TypeScript automation framework designed for both maintainable test engineering and AI-assisted development.
+
+It combines:
+
+- Page Object Model for UI automation
+- shared fixtures for role-based testing
+- API and UI coverage in one framework
+- `AGENTS.md` and local skills to guide AI coding assistants toward framework-aligned changes
+
+The goal is to keep automation changes consistent with the project's structure, conventions, and validation flow.
+
 ## Structure
 
 ```text
@@ -44,6 +57,8 @@ That file is imported directly by the framework at runtime for:
 - role credentials for admin, editor, and viewer
 
 If you need different values, edit `config/test-config.json` directly.
+
+The credentials in `config/test-config.json` are demo credentials for the sample app used by this repository.
 
 ## Run
 
@@ -176,9 +191,31 @@ This framework currently follows these Page Object Model practices:
 
 This section describes the Page Object Model practices that are already implemented in the framework.
 
-## Codex Guidance
+## AI Guidance
 
-This framework includes repo-local guidance for Codex:
+This repository is also structured to help AI coding assistants produce framework-aligned automation changes instead of generic generated code.
+
+- `AGENTS.md` defines repo-level rules such as structure, naming, ownership boundaries, and validation defaults.
+- Local skills under `.codex/skills/` define repeatable workflows for UI page-object work, API workflow changes, and quality-tooling tasks.
+- Together, they help keep selectors in page objects, assertions in specs, fixtures reused, and validation focused on the smallest relevant command set.
+
+### Example Use Case
+
+When asked to convert a manual test case and a raw Playwright recording into maintainable automation, the expected workflow is to:
+
+- inspect similar existing specs and page objects first
+- add new selectors and actions in the correct page object layer
+- keep assertions in the spec
+- reuse shared fixtures and cleanup registration
+- validate the change with targeted checks before finishing
+
+### Expectation
+
+AI guidance improves output quality and consistency, but it does not replace review, execution, or validation.
+
+## AI Assistant Guidance
+
+This framework includes repo-local guidance for Codex and similar AI coding assistants:
 
 - root `AGENTS.md` for framework-wide conventions
 - shared role-based fixtures in `utils/fixtures/TestFixtures.ts`
