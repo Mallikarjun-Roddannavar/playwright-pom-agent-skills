@@ -6,6 +6,13 @@ This file applies to the entire `playwright-pom-agent-skills` framework.
 
 Maintain this Playwright + TypeScript framework for UI and API automation practice. Follow Playwright best practices and Selenium-style Page Object Model guidance as adapted in this repo.
 
+## Repository Boundary
+
+- This repo is the automation framework only.
+- The application under test lives in a separate backend/frontend repository.
+- This repo consumes the AUT through the URLs configured in config/test-config.json.
+- Keep framework docs explicit about that boundary whenever setup or execution behavior is documented.
+
 ## Use The Local Skills
 
 Use these local skills when their scope matches the task:
@@ -25,7 +32,7 @@ Use these local skills when their scope matches the task:
   - `@utils/*`
   - `@config/*`
 - Use route constants from `ui/pages/BasePage.ts` and `api/services/BaseApiService.ts` instead of hardcoded paths.
-- Use config from `config/test-config.json` as the single source of truth.
+- Use config from `config/test-config.json` as the single source of truth for base URLs, role credentials, and shared waits.
 - Use `utils/common/Waits.ts` for framework wait and timeout values.
 - Use `logger.withScope(...)` for scoped logging.
 
@@ -83,3 +90,4 @@ After meaningful changes, prefer validating with the smallest relevant command s
 - Playwright inventory: `./node_modules/.bin/playwright.cmd test --list`
 
 Only run the full test suite when it is relevant to the change or the user asks for it.
+
