@@ -1,4 +1,0 @@
-interface:
-  display_name: "Playwright POM Agent Skills UI POM"
-  short_description: "UI page-object workflow for playwright-pom-agent-skills"
-  default_prompt: "Use $playwright-pom-agent-skills-ui-pom to update UI page objects and specs in playwright-pom-agent-skills."

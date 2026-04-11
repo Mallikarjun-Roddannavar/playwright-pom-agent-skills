@@ -1,4 +1,0 @@
-interface:
-  display_name: "Playwright POM Agent Skills API Workflow"
-  short_description: "API service and fixture workflow for playwright-pom-agent-skills"
-  default_prompt: "Use $playwright-pom-agent-skills-api-workflow to update API services, fixtures, and specs in playwright-pom-agent-skills."

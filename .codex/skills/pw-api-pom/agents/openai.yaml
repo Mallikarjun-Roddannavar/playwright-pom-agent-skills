@@ -1,0 +1,4 @@
+interface:
+  display_name: "PW API POM"
+  short_description: "API service and fixture workflow for pw-api-pom"
+  default_prompt: "Use $pw-api-pom to update API services, fixtures, and specs in playwright-pom-agent-skills."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "PW Framework Tooling"
+  short_description: "Lint, types, reporting, and config workflow for pw-framework-tooling"
+  default_prompt: "Use $pw-framework-tooling to update linting, reporting, logging, and framework configuration in playwright-pom-agent-skills."

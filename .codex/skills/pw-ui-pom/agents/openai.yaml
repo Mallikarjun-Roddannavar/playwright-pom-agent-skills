@@ -1,0 +1,4 @@
+interface:
+  display_name: "PW UI POM"
+  short_description: "UI page-object workflow for pw-ui-pom"
+  default_prompt: "Use $pw-ui-pom to update UI page objects and specs in playwright-pom-agent-skills."
