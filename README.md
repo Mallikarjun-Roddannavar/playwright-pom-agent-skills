@@ -1,6 +1,6 @@
 # Playwright POM Agent Skills (Playwright + TypeScript)
 
-Reusable Playwright + TypeScript framework for UI and API automation with page objects, shared role-based fixtures, and local Codex guidance.
+Playwright + TypeScript automation framework for UI and API testing with page objects, shared fixtures, reusable services, and AI-assistant guidance through AGENTS.md and local skills
 
 ## What This Repo Contains
 
@@ -117,3 +117,4 @@ For detailed framework rules, naming conventions, ownership boundaries, config g
 
 - `AGENTS.md`
 - `.codex/skills/`
+

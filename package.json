@@ -2,7 +2,7 @@
   "name": "playwright-pom-agent-skills",
   "version": "1.0.0",
   "private": true,
-  "description": "Playwright UI/API automation framework with POM and agent skills",
+  "description": "Playwright + TypeScript automation framework for UI and API testing with page objects, shared fixtures, reusable services, and AI-assistant guidance through AGENTS.md and local skills",
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --project=ui",
@@ -27,3 +27,4 @@
     "typescript-eslint": "^8.42.0"
   }
 }
+
