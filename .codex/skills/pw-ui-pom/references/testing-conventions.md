@@ -170,4 +170,3 @@ Why:
 - `ui/pages/LoginPage.ts`
 - `ui/pages/HomePage.ts`
 - `ui/pages/FoldersPage.ts`
-

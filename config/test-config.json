@@ -1,8 +1,8 @@
 {
   "SUITE_NAME": "playwright-pom-agent-skills",
   "BASE_URLS": {
-    "UI": "http://127.0.0.1:5173",
-    "API": "http://127.0.0.1:8000"
+    "UI": "https://playwright-practice-app-teal.vercel.app",
+    "API": "https://playwright-practice-app-ibnw.onrender.com"
   },
   "USERS": {
     "ADMIN": {

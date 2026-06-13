@@ -25,6 +25,6 @@ test.describe("Login", () => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.loginExpectingFailure("bad-user", "bad-password");
-    await expect(loginPage.errorMessage).not.toBeVisible({timeout:1});
+    await expect(loginPage.errorMessage).toBeVisible();
   });
 });

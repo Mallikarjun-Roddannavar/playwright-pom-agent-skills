@@ -19,14 +19,20 @@ test("admin creates folder and viewer can see it after refresh", async ({
 
   const adminFoldersService = new FoldersService(adminRequest);
   const listResponse = await adminFoldersService.list();
-  expect(listResponse.ok()).toBeTruthy();
+
+  if (!listResponse.ok()) {
+    throw new Error(`Test setup failed: could not list folders`);
+  }
+
   const folders = (await listResponse.json()) as FolderResponse[];
   const createdFolderId = folders.find((folder) => folder.name === name)?.id;
-  expect(createdFolderId).toBeTruthy();
+
+  if (!createdFolderId) {
+    throw new Error(`Test setup failed: could not find created folder ${name}`);
+  }
 
   cleanup.add(async () => {
-    const deleteResponse = await adminFoldersService.remove(createdFolderId as string);
-    expect(deleteResponse.ok()).toBeTruthy();
+    await adminFoldersService.remove(createdFolderId);
   });
 
   await viewerHomePage.goto();

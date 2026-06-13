@@ -117,4 +117,3 @@ For detailed framework rules, naming conventions, ownership boundaries, config g
 
 - `AGENTS.md`
 - `.codex/skills/`
-

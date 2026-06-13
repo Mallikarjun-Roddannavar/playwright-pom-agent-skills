@@ -59,14 +59,14 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: ".venv\\Scripts\\python -m uvicorn main:app --host 127.0.0.1 --port 8000",
+      command: "echo running backend API on remote url",
       cwd: "../backend",
       url: `${apiBaseUrl}${BaseApiService.routes.health}`,
       reuseExistingServer: true,
       timeout: timeouts.apiServerStartup,
     },
     {
-      command: "npm run dev -- --host 127.0.0.1 --strictPort --port 5173",
+      command: "echo running frontend UI on remote url",
       cwd: "../frontend",
       url: `${uiBaseUrl}${BasePage.routes.login}`,
       reuseExistingServer: true,
