@@ -42,7 +42,6 @@ Maintain the framework infrastructure that supports test execution quality and d
 3. Reuse an existing script or helper before adding a new one.
 4. Keep claims in docs limited to what the framework actually implements.
 
-
 ## Preferred Change Order
 
 1. Change configuration or shared helper logic first.

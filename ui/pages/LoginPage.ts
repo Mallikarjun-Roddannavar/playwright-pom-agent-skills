@@ -26,10 +26,11 @@ export class LoginPage extends BasePage {
     return homePage;
   }
 
-  async loginExpectingFailure(username: string, password: string): Promise<void> {
+  async loginExpectingFailure(username: string, password: string): Promise<this> {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.submitButton.click();
+    return this;
   }
 
   async waitForPageLoad(): Promise<void> {

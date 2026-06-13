@@ -33,12 +33,13 @@ async function expectRoleCanUploadFile({
   const cleanupFoldersService = new FoldersService(cleanupRequest);
 
   const createResponse = await createFoldersService.create(name);
-  expect(createResponse.ok()).toBeTruthy();
+  if (!createResponse.ok()) {
+    throw new Error(`Test setup failed: could not create folder ${name}`);
+  }
   const createdFolder = (await createResponse.json()) as CreatedFolderResponse;
 
   cleanup.add(async () => {
-    const deleteResponse = await cleanupFoldersService.remove(createdFolder.id);
-    expect(deleteResponse.ok()).toBeTruthy();
+    await cleanupFoldersService.remove(createdFolder.id);
   });
 
   const homePage = new HomePage(page);
@@ -69,11 +70,7 @@ test.describe("Files", () => {
     });
   });
 
-  test("admin can upload a file to a folder", async ({
-    adminPage,
-    adminRequest,
-    cleanup,
-  }) => {
+  test("admin can upload a file to a folder", async ({ adminPage, adminRequest, cleanup }) => {
     await expectRoleCanUploadFile({
       roleName: "admin",
       page: adminPage,
