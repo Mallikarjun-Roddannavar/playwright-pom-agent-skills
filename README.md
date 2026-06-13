@@ -12,7 +12,7 @@ It provides:
 - API automation using service classes
 - shared multi-role fixtures for browser and API sessions
 - linting, formatting, typechecking, reporting, and naming checks
-- local `AGENTS.md` and `.codex/skills/` guidance for framework-aligned changes
+- local `AGENTS.md` and `.agents/skills/` guidance for framework-aligned changes
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Before running tests, make sure the target application is already running and re
 
 ```text
 playwright-pom-agent-skills/
-  .codex/
+  .agents/
     skills/
   api/
     services/
@@ -116,4 +116,4 @@ npm test
 For detailed framework rules, naming conventions, ownership boundaries, config guidance, and validation defaults, see:
 
 - `AGENTS.md`
-- `.codex/skills/`
+- `.agents/skills/`

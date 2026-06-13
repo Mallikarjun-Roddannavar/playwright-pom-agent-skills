@@ -92,7 +92,7 @@ Use these local skills when their scope matches the task:
 - Keep ESLint, Prettier, and `tsc --noEmit` green.
 - Keep `@typescript-eslint/no-floating-promises` enabled.
 - Keep the custom reporter at `utils/common/CustomReporter.ts`.
-- If `npm run ...` fails in the Codex shell with the known Windows `EPERM` issue, use the local binaries directly from `node_modules/.bin`.
+- If `npm run ...` fails in the AI shell with the known Windows `EPERM` issue, use the local binaries directly from `node_modules/.bin`.
 
 ## Validation Defaults
 
