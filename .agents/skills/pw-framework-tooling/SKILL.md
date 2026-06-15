@@ -51,7 +51,7 @@ Maintain the framework infrastructure that supports test execution quality and d
 
 ## Validation Workflow
 
-Prefer direct local binaries if `npm run` is unreliable in the Codex shell:
+Prefer direct local binaries if `npm run` is unreliable in the AI shell:
 
 - `node ./scripts/checkNamingConventions.mjs`
 - `./node_modules/.bin/eslint.cmd .`
