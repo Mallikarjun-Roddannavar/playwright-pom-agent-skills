@@ -117,3 +117,16 @@ For detailed framework rules, naming conventions, ownership boundaries, config g
 
 - `AGENTS.md`
 - `.agents/skills/`
+
+## Using Hermes Agent
+
+This repository natively supports [Hermes Agent](https://hermes-agent.nousresearch.com/) since it utilizes the vendor-neutral `agentskills.io` standard. No code changes are required to integrate Hermes.
+
+1. **Install Hermes:** `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`
+2. **Navigate:** Open your terminal to the root of this repository (`cd playwright-pom-agent-skills`).
+3. **Start:** Run `hermes`. The agent will automatically detect and load `AGENTS.md` into its context.
+4. **Register Skills (Optional):** To give the agent access to the specialized local `.agents/skills/` folder, register it as an external skills directory:
+   ```bash
+   hermes config set skills.external_dirs "['/path/to/playwright-pom-agent-skills/.agents/skills']"
+   ```
+   Hermes will then dynamically load the `pw-api-pom`, `pw-framework-tooling`, and `pw-ui-pom` context files when your task matches their description.
